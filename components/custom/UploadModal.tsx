@@ -20,6 +20,7 @@ export default function UploadModal({ open, onClose, parent, onUploaded }: Uploa
   const [progress, setProgress] = useState(0);
   const { refresh } = useFolderContext();
   const xhrRef = useRef<XMLHttpRequest | null>(null);
+  const [key, setKey] = useState(0);
 
   const handleUpload = async () => {
     if (!file) return;
@@ -75,6 +76,7 @@ export default function UploadModal({ open, onClose, parent, onUploaded }: Uploa
       onUploaded?.();
       onClose();
       refresh();
+      setKey(Math.random() * 1000);
     } catch (err) {
       console.error("Upload error", err);
       alert("Upload failed");
@@ -102,7 +104,7 @@ export default function UploadModal({ open, onClose, parent, onUploaded }: Uploa
           <DialogTitle>Upload a File</DialogTitle>
         </DialogHeader>
 
-        <Input key={uploading ? 1 : 0} type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+        <Input key={key} type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
 
         {uploading && (
           <div className="w-full bg-gray-200 h-2 rounded mt-2">

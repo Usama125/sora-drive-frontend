@@ -13,6 +13,7 @@ import { useViewMode } from "@/context/ViewModeContext";
 import Loader from "@/components/custom/Loader";
 import { isAudioFile, isImageFile, isPdfFile, isVideoFile } from "@/lib/functions";
 import Image from "next/image";
+import { FolderDown } from "lucide-react";
 
 export default function FolderPage() {
   const { id } = useParams();
@@ -42,7 +43,7 @@ export default function FolderPage() {
         {viewMode === "gallery" ? "📋 Table View" : "🖼️ Gallery View"}
       </button>
       {viewMode === "gallery" ? (
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-6">
+        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6">
           {folders.map((folder) => (
             <FolderItem key={folder._id} name={folder.name} id={folder._id} />
           ))}
@@ -91,6 +92,13 @@ export default function FolderPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+      {folders.length === 0 && files.length === 0 && (
+        <div className="flex flex-col items-center justify-center text-center mt-20 text-gray-500">
+          <FolderDown className="w-16 h-16 mb-4" />
+          <h2 className="text-lg font-semibold">This folder is empty</h2>
+          <p className="text-sm mt-1">Upload files or create a new folder to get started.</p>
         </div>
       )}
 

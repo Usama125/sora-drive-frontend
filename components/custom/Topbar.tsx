@@ -6,6 +6,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 
 export default function Topbar() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,10 @@ export default function Topbar() {
       <h1 className="text-xl font-semibold">Sora Drive</h1>
       <div className="flex items-center gap-4">
         {/* You can add search here */}
-        <Button onClick={handleLogout} disabled={loading}>{loading ? 'Logging out...' : 'Logout'}</Button>
+        <Button onClick={handleLogout} disabled={loading}>
+          <LogOut className="w-4 h-4 mr-1" />
+          {loading ? 'Logging out...' : 'Logout'}
+        </Button>
       </div>
     </header>
   );
