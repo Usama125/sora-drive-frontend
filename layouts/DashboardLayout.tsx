@@ -5,10 +5,12 @@ import Sidebar from "@/components/custom/Sidebar";
 import Topbar from "@/components/custom/Topbar";
 import UploadModal from "@/components/custom/UploadModal";
 import { FolderProvider } from "@/hooks/FolderContext";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,13 +22,21 @@ import { Upload, FolderPlus } from "lucide-react";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [uploadOpen, setUploadOpen] = useState(false);
   const [folderOpen, setFolderOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const params = useParams();
+  const router = useRouter();
 
   const rawId = params?.id;
   const currentFolderId = Array.isArray(rawId) ? rawId[0] : rawId || "root";
 
   const handleUpload = () => setUploadOpen(true);
   const handleNewFolder = () => setFolderOpen(true);
+
+  const handleLogout = async () => {
+    setLoading(true);
+    await signOut(auth)
+    router.push('/login');
+  }
 
   return (
     <FolderProvider>
@@ -55,7 +65,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Button variant="outline" className="text-sm px-3 py-1">
+              <Button variant="outline" className="text-sm px-3 py-1" onClick={handleLogout} disabled={loading}>
                 <LogOut className="w-4 h-4 mr-1" />
                 Logout
               </Button>
