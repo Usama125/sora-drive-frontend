@@ -7,6 +7,7 @@ import axios from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { getReadableFileType, isAudioFile, isImageFile, isPdfFile, isVideoFile } from "@/lib/functions";
 import { FileText, FileAudio, FileVideo, File } from "lucide-react";
+import Image from "next/image";
 
 export function FileRow({ name, id, onPreview }: { name: string; type: string; id: string; onPreview?: (signedUrl: string) => void;}) {
   const [signedUrl, setSignedUrl] = useState("");
@@ -32,7 +33,7 @@ export function FileRow({ name, id, onPreview }: { name: string; type: string; i
     <tr className="hover:bg-gray-50">
       <td className="p-3 flex items-center gap-3 cursor-pointer" onClick={() => onPreview?.(signedUrl)}>
         {isImageFile(name) && signedUrl ? (
-          <img src={signedUrl} alt={name} className="w-5 h-5 object-cover rounded" />
+          <Image src={signedUrl} unoptimized alt={name} width={20} height={20} className="w-5 h-5 object-cover rounded" />
         ) : isPdfFile(name) ? (
           <FileText className="w-5 h-5 text-red-600" />
         ) : isVideoFile(name) ? (

@@ -12,6 +12,7 @@ import { FileRow } from "@/components/custom/FileRow";
 import { useViewMode } from "@/context/ViewModeContext";
 import Loader from "@/components/custom/Loader";
 import { isAudioFile, isImageFile, isPdfFile, isVideoFile } from "@/lib/functions";
+import Image from "next/image";
 
 export default function FolderPage() {
   const { id } = useParams();
@@ -103,11 +104,15 @@ export default function FolderPage() {
             onClick={(e) => e.stopPropagation()}
           >
             {isImageFile(selectedFile.name) ? (
-              <img
-                src={selectedFile.url}
-                alt={selectedFile.name}
-                className="w-full h-full object-contain"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={selectedFile.url}
+                  alt={selectedFile.name}
+                  fill
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
             ) : isVideoFile(selectedFile.name) ? (
               <video controls className="w-full h-full">
                 <source src={selectedFile.url} type="video/mp4" />

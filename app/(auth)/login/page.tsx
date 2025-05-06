@@ -22,7 +22,7 @@ export default function LoginPage() {
     if (user) {
       router.replace("/");
     }
-  }, [user]);
+  }, [router, user]);
 
   const formik = useFormik({
     initialValues: {
@@ -40,10 +40,12 @@ export default function LoginPage() {
         await signInWithEmailAndPassword(auth, values.email, values.password);
         router.push("/");
         // Redirect or notify on success if needed
-      } catch (err: any) {
-        setFirebaseError(err.message || "Login failed.");
-      } finally {
-        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setFirebaseError(err.message || "Login failed.");
+        } else {
+          setFirebaseError("Login failed.");
+        }
       }
     },
   });

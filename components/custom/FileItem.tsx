@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { useEffect, useState } from "react";
 import { getReadableFileType, isAudioFile, isImageFile, isPdfFile, isVideoFile } from "@/lib/functions";
 import { FileText, FileAudio, FileVideo, File } from "lucide-react";
+import Image from "next/image";
 
 export const FileItem = ({
   id,
@@ -44,7 +45,7 @@ export const FileItem = ({
     >
       <div className="flex-grow flex items-center justify-center">
         {isImageFile(name) && signedUrl ? (
-          <img src={signedUrl} alt={name} className="w-20 h-20 object-cover rounded" />
+          <Image src={signedUrl} unoptimized alt={name} width={80} height={80} className="w-20 h-20 object-cover rounded" />
         ) : isPdfFile(name) ? (
           <FileText className="w-16 h-16 text-red-600" />
         ) : isVideoFile(name) ? (
