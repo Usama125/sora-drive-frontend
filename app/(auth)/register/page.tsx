@@ -53,9 +53,11 @@ export default function RegisterPage() {
         // Success — you can redirect or notify here
       } catch (err: unknown) {
         if (err instanceof Error) {
-          setFirebaseError(err.message || "Login failed.");
+          setFirebaseError("Signup Failed");
+          setLoading(false);
         } else {
-          setFirebaseError("Login failed.");
+          setFirebaseError("Signup Failed");
+          setLoading(false);
         }
       }
     },

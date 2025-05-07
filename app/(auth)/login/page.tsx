@@ -42,9 +42,11 @@ export default function LoginPage() {
         // Redirect or notify on success if needed
       } catch (err: unknown) {
         if (err instanceof Error) {
-          setFirebaseError(err.message || "Login failed.");
+          setFirebaseError("Username OR Password is incorrect");
+          setLoading(false);
         } else {
-          setFirebaseError("Login failed.");
+          setFirebaseError("Username OR Password is incorrect");
+          setLoading(false);
         }
       }
     },
